@@ -10,7 +10,7 @@
  * 
  * @module dsp33
  * @name basicSample
- * @version 0.0.719
+ * @version 0.0.720
  * test
  */
   
@@ -72,7 +72,7 @@ function wavToFloat32Array(buffer){
   }
   return floats;
 }
-
+ 
 var bufDataTestNum=0,bufDataTestChk=0;
 var bufDataTestArray=wavToFloat32Array(snare);
 function bufDataTest(t)
@@ -203,7 +203,7 @@ export function dsp(t) {
   out=comb4.run(Math.random()*0.1+kick);
   //out=comb4.run(snd*1.4); 
   
-  return out; 
+  return snd+out;  
   } 
   //var num=dd.getSeconds();
   //return Math.sin(t*Math.PI*2*arr[Math.round(num)%300]);
