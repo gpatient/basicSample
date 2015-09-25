@@ -9,12 +9,14 @@
  * https://github.com/jd-code/groovit/
  * 
  * @name basicSample
- * @version 0.0.71
+ * @version 0.0.711
  * test
  */
 //var dd=new Date();
 //var i,sec;
 //sec=dd.getMilliseconds();
+
+//sampler source test
 import snare from 'jd-code/groovit/master/SAMPLES/SNAR_13D.WAV';
 import hihat from 'pdv/webmpc/master/sounds/r909/909hat.wav';
 import guitar from 'zillionk/AirInstruments/master/data/guitarAm.wav';
@@ -32,6 +34,7 @@ var lead = Sampler(1);
 lead.add('guitar', guitar);
 
 
+
 function makeSampler(t)
 {
   var out;
@@ -47,13 +50,8 @@ function makeSampler(t)
   return out;
 }
 
-function arp(t,measure, x, y, z){
-  var ts = t / 2 % measure;
-  return Math.sin(x * (Math.exp(-ts * y))) * Math.exp(-ts * z);
-}
 
-
-///////////////////////
+////////////////////////////////wave file buffer reading test
 
 function wavToFloat32Array(buffer){
   var view = new DataView(buffer, 44);
@@ -84,6 +82,13 @@ function bufDataTest(t)
   }
   return out;
 }
+
+////////////////////////////////////////simple kick ugen algorism  from got-some-303
+function arp(t,measure, x, y, z){
+  var ts = t / 2 % measure;
+  return Math.sin(x * (Math.exp(-ts * y))) * Math.exp(-ts * z);
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   var volFreqs=[1,2,3,4,5,6,7,8,9,10];
