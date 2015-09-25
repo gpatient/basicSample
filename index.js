@@ -9,7 +9,7 @@
  * https://github.com/jd-code/groovit/
  * 
  * @name basicSample
- * @version 0.0.7112
+ * @version 0.0.712
  * test
  */
 //var dd=new Date();
@@ -38,7 +38,7 @@ lead.add('guitar', guitar);
 function makeSampler(t)
 {
   var out;
-  if ( (t*8)    % 1 === 0 ) lead.tune([0.1,[.2,2][t/4%2|0]][t%2|0]);
+  if ( (t*8)    % 1 === 0 ) lead.tune([0.1,[0.2,2][t/4%2|0]][t%2|0]);
   if ( (t/3+2/4) % 1 === 0 ) drums.play('snare', 1, 1);
   if ( (t+2/4)   % 1 === 0 ) drums.play('hihat', 0.8, 1.2);
 
@@ -73,7 +73,7 @@ var bufDataTestArray=wavToFloat32Array(snare);
 function bufDataTest(t)
 {
   var out=0;
-  if(Math.round(t*1000)%3000==0)
+  if(Math.round(t*1000)%3000===0)
     bufDataTestChk=1;
   if(bufDataTestChk==1){
     out=bufDataTestArray[bufDataTestNum];
@@ -136,6 +136,14 @@ function makeSnd(t)
   return snd;
 }
 
+var latchChk=0,latchVal=0;
+function latch(t,measher,val)
+{
+  var ret=0;
+  if(Math.round(t*1000)%measher===0){latchVal=val;}
+  ret=latchVal;
+  return ret;
+}
 
 export function dsp(t) {
    var kick =arp(t,1/4, 48, 50, 8)+arp(t,1/6, 48, 350, 458);
@@ -145,17 +153,16 @@ export function dsp(t) {
 
   var i;
 
-  if(t<2.0 && check==0){initcode(t);check=1;return Math.sin(t*tau*340);}
+  if(t<2.0 && check===0){initcode(t);check=1;return Math.sin(t*tau*340);}
   else{
   freqs[0]=Math.round(t/8)*100+600;
   freqs[1]=Math.round(t/4)*200+1000;
+  freqs[2]=latch(t,300,makeVol(t,22)*840+140);
   kick=kick*Math.abs(makeVol(t,55)/2+0.5);
   snd=makeSnd(t)*0.8+kick*0.3;
-  snd+=makeSampler(t*2)*0.1;
-  snd+=bufDataTest(t)*0.2;
- 
-  
-  //return snd;
+  //snd+=makeSampler(t*2)*0.1;
+ // snd+=bufDataTest(t)*0.2;
+
   return snd;
   }
   //var num=dd.getSeconds();
