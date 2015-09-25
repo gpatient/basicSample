@@ -1,12 +1,12 @@
 
 /**
- *  change source form  stagas/Combofilter
+ *  change source from  stagas/Combofilter
  * @module basicSample 
  * @author ChangeFromStagas
  * @org MYORGFromOpendsp
  * @desc ChangeFromCombfilter
  * @license MmFromMit
- * @version 0.0.720
+ * @version 0.0.724
  */
 
 export default CombFilter6;
@@ -43,7 +43,7 @@ CombFilter6.prototype.run = function(input){
   var output = this.buffer[this.index];
   //if(this.index>0)output = this.buffer[this.index-1];
   this.filter = output * (1 - this.damp) + this.filter * this.damp;
-  this.buffer[this.index] =this.k * input * this.inputMul + this.filter * this.feedback;
+  this.buffer[this.index] = input * this.inputMul + this.filter * this.feedback;
   this.buffer[this.index] -=this.average;
   this.buffer[this.index] /=this.divNum;
   output=this.buffer[this.index];

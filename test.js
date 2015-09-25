@@ -8,9 +8,8 @@
  * data
  * https://github.com/jd-code/groovit/
  * 
- * @module dsp33
  * @name basicSample
- * @version 0.0.720
+ * @version 0.0.724
  * test
  */
   
