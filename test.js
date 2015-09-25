@@ -10,7 +10,7 @@
  * 
  * @module dsp33
  * @name basicSample
- * @version 0.0.715
+ * @version 0.0.716
  * test
  */
   
@@ -94,10 +94,10 @@ function arp(t,measure, x, y, z){
   return Math.sin(x * (Math.exp(-ts * y))) * Math.exp(-ts * z);
 }
 ///////////////////////////////////////combtest
-var comb4 = Comb(5315);
-comb4.feedback = 1.0415;
-comb4.damp = 0.5;
-comb4.setInputMul(0.0150);
+var comb4 = Comb(115315);
+comb4.feedback = 1.00115;
+comb4.damp = 0.99; 
+comb4.setInputMul(0.150); 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -183,7 +183,7 @@ var lat2=latch2(36);
 
 export function dsp(t) {
    var kick =arp(t,1/4, 48, 50, 8)+arp(t,1/6, 48, 350, 458);
-  var snd;
+  var snd,out=0;
   var i;
 
   if(t<2.0 && check===0){
@@ -198,11 +198,13 @@ export function dsp(t) {
   freqs[2]=lat2.run(t,makeVol(t*5,22)*220+420,1);
   //freqs[3]=makeVol(t,22)*840+140;
   kick=kick;
-  snd=makeSnd(t)*0.3+kick*0.2;
+  snd=makeSnd(t)*0.3+kick*0.02;
   snd+=makeSampler(t*2)*0.1;
   snd+=bufDataTest(t)*0.2;
-  //snd=comb4(snd);
-  return snd;
+  out=comb4.run(Math.random()*0.1+kick)-0.2;
+  //out=comb4.run(snd*1.4); 
+  
+  return snd*0.3+out; 
   } 
   //var num=dd.getSeconds();
   //return Math.sin(t*Math.PI*2*arr[Math.round(num)%300]);

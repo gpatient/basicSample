@@ -38,6 +38,7 @@ CombFilter6.prototype.setInputMul= function(val){
 CombFilter6.prototype.run = function(input){
   //this.buffer[this.index] = input * 0.015 + this.filter * this.feedback;
  
+  //return input;
   var output = this.buffer[this.index];
   //if(this.index>0)output = this.buffer[this.index-1];
   this.filter = output * (1 - this.damp) + this.filter * this.damp;
@@ -49,22 +50,23 @@ CombFilter6.prototype.run = function(input){
   if(this.max>output)this.max=output;
   if (++this.index === this.size) 
   {
-    this.index = 0;this.k*=-1;
+    this.index = 0;
+    this.k*=-1;
     this.average=this.sum/this.size;this.sum=0;
     if(Math.abs(this.max)>1.0)
       this.divNum=Math.abs(this.max);
       else{ 
-        this.divNum=1.0/((this.feedback+1.0)/2.0);
+        this.divNum=1.0;///((this.feedback+1.0)/2.0);
         if(Math.random()<0.9){
           //this.size*=0.9;
-          this.size=Math.floor(this.size*0.986);
+          //this.size=Math.floor(this.size*0.99986);
           //this.size=Math.floor(Math.random()*(this.len-100))+100;
           if(this.size<100){
-            this.size=Math.floor(Math.random()*(this.len-100))+100;
+            this.size=Math.floor(Math.random()*(this.len-100))+99;
             this.inputMul=this.initInputMul;
           }
-          this.inputMul*=1.3;
-          if(this.inputMul>5.0) 
+          //this.inputMul*=1.01;
+          if(this.inputMul>2.0) 
             this.inputMul=this.initInputMul;
         }
         
