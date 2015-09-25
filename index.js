@@ -97,6 +97,17 @@ function makeSnd(t)
      
   return snd;
 }
+
+var ii=0;
+var bufDataTestArray=wavToFloat32Array(snare);
+function bufDataTest(t)
+{
+  var out=0;
+  //if(t%2==0)
+  out=bufDataTestArray[ii%bufDataTest.length];
+   ii++;
+  return out;
+}
 export function dsp(t) {
    var kick =arp(t,1/4, 48, 50, 8)+arp(t,1/6, 48, 350, 458);
   var snd;
@@ -111,11 +122,32 @@ export function dsp(t) {
   freqs[1]=Math.round(t/4)*200+1000;
   kick=kick*Math.abs(makeVol(t,55)/2+0.5);
   snd=makeSnd(t)*0.8+kick*0.3;
-  //snd+=makeSampler(t*2)*0.1;
+  snd+=makeSampler(t*2)*0.1;
+  snd=bufDataTest(t);
+ 
   
-  return Math.sin(snd);
+  //return snd;
+  return bufDataTest[(ii%bufDataTest.length )];
   }
   //var num=dd.getSeconds();
   //return Math.sin(t*Math.PI*2*arr[Math.round(num)%300]);
   
+}
+
+
+///////////////////////
+
+export function wavToFloat32Array(buffer){
+  var view = new DataView(buffer, 44);
+  var len = view.byteLength / 2;
+  var floats = new Float32Array(len);
+  for (var i = 0; i < view.byteLength; i += 2) {
+    var s = view.getUint16(i, true);
+    if (s > 32767) {
+      s -= 65536;
+    }
+    s /= 32768;
+    floats[i/2] = s;
+  }
+  return floats;
 }
