@@ -9,7 +9,7 @@
  * https://github.com/jd-code/groovit/
  * 
  * @name basicSample
- * @version 0.0.7127
+ * @version 0.0.714
  * test
  */
 //var dd=new Date();
@@ -22,7 +22,7 @@ import hihat from 'pdv/webmpc/master/sounds/r909/909hat.wav';
 import guitar from 'zillionk/AirInstruments/master/data/guitarAm.wav';
 
 import Sampler from 'stagas/sampler';
-
+//import comb from 'gpatient/Changecombfilter6';
 
 var drums = Sampler(8);
 
@@ -88,6 +88,11 @@ function arp(t,measure, x, y, z){
   var ts = t / 2 % measure;
   return Math.sin(x * (Math.exp(-ts * y))) * Math.exp(-ts * z);
 }
+///////////////////////////////////////combtest
+//var comb4 = Comb(5315);
+//comb4.feedback = 1.0415;
+//comb4.damp = 0.5;
+//comb4.setInputMul(0.0150);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -136,9 +141,12 @@ function makeSnd(t)
   return snd;
 }
 
+/////////////// two way practice of latch //////////////////////////
+
 var latchChk=[0,0],latchVal=[0,0];
 function latch(t,measher,val,nn)
 {
+  
   var ret=0;
   if((Math.round(t*1000)%(measher*10))<100){if(latchChk[nn]===0)latchVal[nn]=val;latchChk[nn]=1;}
   else{latchChk[nn]=0;}
@@ -146,12 +154,31 @@ function latch(t,measher,val,nn)
   return ret;
 }
 
+function latch2(measher){
+    if (!(this instanceof latch2)) return new latch2(measher);
+  
+  this.chk=0;
+  this.measher=measher;
+  this.val=0;
+}
+
+latch2.prototype.run=function (t,val){
+    var ret=0;
+    if((Math.round(t*1000)%(this.measher*10))<100){if(this.chk===0)this.val=val;this.chk=1;}
+    else{this.chk=0;}
+    ret=this.val;
+    return ret;
+  };
+
+var lat1= latch2(70);
+var lat2=latch2(36);
+
+///////////////////////////////////////////////////////////////////////
+
+
 export function dsp(t) {
    var kick =arp(t,1/4, 48, 50, 8)+arp(t,1/6, 48, 350, 458);
   var snd;
-  var ampA=[1,2,3,4,5,6];
-  var ampB=[1,2,3,4,5,6];
-
   var i;
 
   if(t<2.0 && check===0){
@@ -159,9 +186,11 @@ export function dsp(t) {
     for(i=0;i<20;i++)arr[i+20]*=0.5;
     return Math.sin(t*tau*340);}
   else{
-  freqs[0]=latch(t,70,makeVol(t*5,125)*440+840,0);
+  //freqs[0]=latch(t,70,makeVol(t*5,125)*440+840,0);
+  freqs[0]=lat1.run(t,makeVol(t*5,125)*440+840);
   freqs[1]=makeVol(t/2,66)*2400+140;
-  freqs[2]=latch(t,36,makeVol(t*5,22)*220+420,1);
+  //freqs[2]=latch(t,36,makeVol(t*5,22)*220+420,1);
+  freqs[2]=lat2.run(t,makeVol(t*5,22)*220+420,1);
   //freqs[3]=makeVol(t,22)*840+140;
   kick=kick;
   snd=makeSnd(t)*0.3+kick*0.2;
