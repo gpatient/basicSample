@@ -9,14 +9,14 @@
  * https://github.com/jd-code/groovit/
  * 
  * @name basicSample
- * @version 0.0.711
+ * @version 0.0.7112
  * test
  */
 //var dd=new Date();
 //var i,sec;
 //sec=dd.getMilliseconds();
 
-//sampler source test
+//sampler source test from stagas/sampler
 import snare from 'jd-code/groovit/master/SAMPLES/SNAR_13D.WAV';
 import hihat from 'pdv/webmpc/master/sounds/r909/909hat.wav';
 import guitar from 'zillionk/AirInstruments/master/data/guitarAm.wav';
@@ -51,7 +51,7 @@ function makeSampler(t)
 }
 
 
-////////////////////////////////wave file buffer reading test
+////////////////////////////////wave file buffer reading test from stagas/sampler
 
 function wavToFloat32Array(buffer){
   var view = new DataView(buffer, 44);
