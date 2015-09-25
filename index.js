@@ -9,7 +9,7 @@
  * https://github.com/jd-code/groovit/
  * 
  * @name basicSample
- * @version 0.0.7
+ * @version 0.0.71
  * test
  */
 //var dd=new Date();
@@ -70,14 +70,18 @@ function wavToFloat32Array(buffer){
   return floats;
 }
 
-var bufDataTestNum=0;
+var bufDataTestNum=0,bufDataTestChk=0;
 var bufDataTestArray=wavToFloat32Array(snare);
 function bufDataTest(t)
 {
   var out=0;
-  //if((t/2)%3==0)
-  out=bufDataTestArray[bufDataTestNum%bufDataTestArray.length ];
-   bufDataTestNum++;
+  if(Math.round(t*1000)%3000==0)
+    bufDataTestChk=1;
+  if(bufDataTestChk==1){
+    out=bufDataTestArray[bufDataTestNum];
+    bufDataTestNum++;
+    if(bufDataTestNum>bufDataTestArray.length){bufDataTestNum=0;bufDataTestChk=0;}
+  }
   return out;
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -143,7 +147,7 @@ export function dsp(t) {
   kick=kick*Math.abs(makeVol(t,55)/2+0.5);
   snd=makeSnd(t)*0.8+kick*0.3;
   snd+=makeSampler(t*2)*0.1;
-  snd+=bufDataTest(t);
+  snd+=bufDataTest(t)*0.2;
  
   
   //return snd;
