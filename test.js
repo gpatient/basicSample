@@ -10,7 +10,7 @@
  * 
  * @module dsp33
  * @name basicSample
- * @version 0.0.714
+ * @version 0.0.715
  * test
  */
   
@@ -25,6 +25,9 @@ import guitar from 'zillionk/AirInstruments/master/data/guitarAm.wav';
 
 import Sampler from 'stagas/sampler';
 //import comb from 'gpatient/Changecombfilter6';
+import Comb from './index.js';
+import dbg from 'debug';
+dbg('SampleRate555')(sampleRate);
 
 var drums = Sampler(8);
 
@@ -91,10 +94,10 @@ function arp(t,measure, x, y, z){
   return Math.sin(x * (Math.exp(-ts * y))) * Math.exp(-ts * z);
 }
 ///////////////////////////////////////combtest
-//var comb4 = Comb(5315);
-//comb4.feedback = 1.0415;
-//comb4.damp = 0.5;
-//comb4.setInputMul(0.0150);
+var comb4 = Comb(5315);
+comb4.feedback = 1.0415;
+comb4.damp = 0.5;
+comb4.setInputMul(0.0150);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -198,7 +201,7 @@ export function dsp(t) {
   snd=makeSnd(t)*0.3+kick*0.2;
   snd+=makeSampler(t*2)*0.1;
   snd+=bufDataTest(t)*0.2;
-
+  //snd=comb4(snd);
   return snd;
   } 
   //var num=dd.getSeconds();
