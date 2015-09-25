@@ -10,7 +10,7 @@
  * 
  * @module dsp33
  * @name basicSample
- * @version 0.0.717
+ * @version 0.0.719
  * test
  */
   
