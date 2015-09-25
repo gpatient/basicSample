@@ -140,7 +140,8 @@ var latchChk=0,latchVal=0;
 function latch(t,measher,val)
 {
   var ret=0;
-  if(Math.round(t*1000)%measher===0){latchVal=val;}
+  if(Math.round(t*10000)%measher*10<10){if(latchChk===0)latchVal=val;latchChk=1;}
+  else{latchChk=0;}
   ret=latchVal;
   return ret;
 }
