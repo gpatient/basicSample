@@ -10,7 +10,7 @@
  * 
  * @module dsp33
  * @name basicSample
- * @version 0.0.716
+ * @version 0.0.717
  * test
  */
   
@@ -191,20 +191,19 @@ export function dsp(t) {
     for(i=0;i<20;i++)arr[i+20]*=0.5;
     return Math.sin(t*tau*340);}
   else{
-  //freqs[0]=latch(t,70,makeVol(t*5,125)*440+840,0);
-  freqs[0]=lat1.run(t,makeVol(t*5,125)*440+840);
+  freqs[0]=latch(t,70,makeVol(t*5,125)*440+840,0);
+  //freqs[0]=lat1.run(t,makeVol(t*5,125)*440+840);
   freqs[1]=makeVol(t/2,66)*2400+140;
-  //freqs[2]=latch(t,36,makeVol(t*5,22)*220+420,1);
-  freqs[2]=lat2.run(t,makeVol(t*5,22)*220+420,1);
-  //freqs[3]=makeVol(t,22)*840+140;
+  freqs[2]=latch(t,36,makeVol(t*5,22)*220+420,1);
+  //freqs[2]=lat2.run(t,makeVol(t*5,22)*220+420,1);
   kick=kick;
   snd=makeSnd(t)*0.3+kick*0.02;
   snd+=makeSampler(t*2)*0.1;
   snd+=bufDataTest(t)*0.2;
-  out=comb4.run(Math.random()*0.1+kick)-0.2;
-  //out=comb4.run(snd*1.4)*0.01; 
+  out=comb4.run(Math.random()*0.1+kick);
+  //out=comb4.run(snd*1.4); 
   
-  return snd*0.3+out; 
+  return out; 
   } 
   //var num=dd.getSeconds();
   //return Math.sin(t*Math.PI*2*arr[Math.round(num)%300]);

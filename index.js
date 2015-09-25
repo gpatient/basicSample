@@ -1,7 +1,7 @@
 
 /**
  *  change source form  stagas/Combofilter
- * @module CombFilter6 
+ * @module basicSample 
  * @author ChangeFromStagas
  * @org MYORGFromOpendsp
  * @desc ChangeFromCombfilter
@@ -52,7 +52,7 @@ CombFilter6.prototype.run = function(input){
   {
     this.index = 0;
     this.k*=-1;
-    this.average=shis.sum/1.0/this.size;this.sum=0;
+    this.average=this.sum/this.size;this.sum=0;
     if(Math.abs(this.max)>1.0)
       this.divNum=Math.abs(this.max);
       else{ 
