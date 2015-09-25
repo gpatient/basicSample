@@ -9,7 +9,7 @@
  * https://github.com/jd-code/groovit/
  * 
  * @name basicSample
- * @version 0.0.7122
+ * @version 0.0.7127
  * test
  */
 //var dd=new Date();
@@ -91,7 +91,7 @@ function arp(t,measure, x, y, z){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  var volFreqs=[1,2,3,4,5,6,7,8,9,10];
+  var volFreqs=[1,0.2,3,0.4,5,6,0.7,8,0.9,0.10];
   var freqs=[1100,200,300,400,500,600];
   
 var r1,r2,r3;
@@ -111,8 +111,8 @@ function makeVol(t,num)
   var ret;
 
   for(i=0;i<10;i++){
-    ret=Math.sin(t*tau/volFreqs[i])*arr[i*2+num]
-       +Math.cos(t*tau/volFreqs[i])*arr[i*2+num+1];
+    ret=Math.sin(t*tau*volFreqs[i])*arr[i*2+num]
+       +Math.cos(t*tau*volFreqs[i])*arr[i*2+num+1];
   }
   return ret*0.2;
 }
@@ -136,13 +136,13 @@ function makeSnd(t)
   return snd;
 }
 
-var latchChk=0,latchVal=0;
-function latch(t,measher,val)
+var latchChk=[0,0],latchVal=[0,0];
+function latch(t,measher,val,nn)
 {
   var ret=0;
-  if((Math.round(t*1000)%(measher*10))<100){if(latchChk===0)latchVal=val;latchChk=1;}
-  else{latchChk=0;}
-  ret=latchVal;
+  if((Math.round(t*1000)%(measher*10))<100){if(latchChk[nn]===0)latchVal[nn]=val;latchChk[nn]=1;}
+  else{latchChk[nn]=0;}
+  ret=latchVal[nn];
   return ret;
 }
 
@@ -159,12 +159,12 @@ export function dsp(t) {
     for(i=0;i<20;i++)arr[i+20]*=0.5;
     return Math.sin(t*tau*340);}
   else{
-  freqs[0]=latch(t,70,makeVol(t,125)*440+440);
-  freqs[1]=makeVol(t,66)*2400+140;
-  freqs[2]=latch(t,100,makeVol(t,22)*220+220);
+  freqs[0]=latch(t,70,makeVol(t*5,125)*440+840,0);
+  freqs[1]=makeVol(t/2,66)*2400+140;
+  freqs[2]=latch(t,36,makeVol(t*5,22)*220+420,1);
   //freqs[3]=makeVol(t,22)*840+140;
-  kick=kick*Math.abs(makeVol(t,55)/2+0.5);
-  snd=makeSnd(t)*0.3+kick*0.3;
+  kick=kick;
+  snd=makeSnd(t)*0.3+kick*0.2;
   snd+=makeSampler(t*2)*0.1;
   snd+=bufDataTest(t)*0.2;
 
