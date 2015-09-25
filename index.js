@@ -9,6 +9,7 @@
  * https://github.com/jd-code/groovit/
  * 
  * @name basicSample
+ * @version 0.0.7
  * test
  */
 //var dd=new Date();
