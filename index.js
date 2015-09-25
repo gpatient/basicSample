@@ -80,6 +80,7 @@ function bufDataTest(t)
    bufDataTestNum++;
   return out;
 }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   var volFreqs=[1,2,3,4,5,6,7,8,9,10];
   var freqs=[1100,200,300,400,500,600];
@@ -142,7 +143,7 @@ export function dsp(t) {
   kick=kick*Math.abs(makeVol(t,55)/2+0.5);
   snd=makeSnd(t)*0.8+kick*0.3;
   snd+=makeSampler(t*2)*0.1;
-  snd=bufDataTest(t);
+  snd+=bufDataTest(t);
  
   
   //return snd;
