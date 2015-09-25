@@ -202,7 +202,7 @@ export function dsp(t) {
   snd+=makeSampler(t*2)*0.1;
   snd+=bufDataTest(t)*0.2;
   out=comb4.run(Math.random()*0.1+kick)-0.2;
-  //out=comb4.run(snd*1.4); 
+  //out=comb4.run(snd*1.4)*0.01; 
   
   return snd*0.3+out; 
   } 

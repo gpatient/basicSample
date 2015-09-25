@@ -45,14 +45,14 @@ CombFilter6.prototype.run = function(input){
   this.buffer[this.index] =this.k * input * this.inputMul + this.filter * this.feedback;
   this.buffer[this.index] -=this.average;
   this.buffer[this.index] /=this.divNum;
-  
+  output=this.buffer[this.index];
   this.sum+=output;
   if(this.max>output)this.max=output;
   if (++this.index === this.size) 
   {
     this.index = 0;
     this.k*=-1;
-    this.average=this.sum/this.size;this.sum=0;
+    this.average=shis.sum/1.0/this.size;this.sum=0;
     if(Math.abs(this.max)>1.0)
       this.divNum=Math.abs(this.max);
       else{ 
