@@ -140,7 +140,7 @@ var latchChk=0,latchVal=0;
 function latch(t,measher,val)
 {
   var ret=0;
-  if(Math.round(t*10000)%measher*10<10){if(latchChk===0)latchVal=val;latchChk=1;}
+  if((Math.round(t*1000)%(measher*10))<100){if(latchChk===0)latchVal=val;latchChk=1;}
   else{latchChk=0;}
   ret=latchVal;
   return ret;
@@ -154,11 +154,15 @@ export function dsp(t) {
 
   var i;
 
-  if(t<2.0 && check===0){initcode(t);check=1;return Math.sin(t*tau*340);}
+  if(t<2.0 && check===0){
+    initcode(t);check=1;
+    for(i=0;i<20;i++)arr[i+20]*=0.1;
+    return Math.sin(t*tau*340);}
   else{
-  freqs[0]=Math.round(t/8)*100+600;
-  freqs[1]=Math.round(t/4)*200+1000;
-  freqs[2]=latch(t,300,makeVol(t,22)*840+140);
+  freqs[0]=latch(t,70,makeVol(t,125)*440+340);
+  freqs[1]=makeVol(t,66)*400+1340;
+  freqs[2]=latch(t,100,makeVol(t,22)*840+540);
+  //freqs[3]=makeVol(t,22)*840+140;
   kick=kick*Math.abs(makeVol(t,55)/2+0.5);
   snd=makeSnd(t)*0.8+kick*0.3;
   //snd+=makeSampler(t*2)*0.1;
