@@ -108,9 +108,9 @@ export function dsp(t) {
   else{
   freqs[0]=Math.round(t/8)*100+600;
   freqs[1]=Math.round(t/4)*200+1000;
-  //kick=kick*Math.abs(makeVol(t,55)/2+0.5);
-  //snd=makeSnd(t)*0.8+kick*0.3;
-  snd=makeSampler(t*2);
+  kick=kick*Math.abs(makeVol(t,55)/2+0.5);
+  snd=makeSnd(t)*0.8+kick*0.3;
+  //snd+=makeSampler(t*2)*0.1;
   
   return Math.sin(snd);
   }
