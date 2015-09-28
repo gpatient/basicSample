@@ -2,11 +2,11 @@
 /**
  *  change source from  stagas/Combofilter
  * @module basicSample 
- * @author ChangeFromStagas
- * @org MYORGFromOpendsp
- * @desc ChangeFromCombfilter
- * @license MmFromMit
- * @version 0.0.766
+ *  author ChangeFromStagas
+ *  org MYORGFromOpendsp
+ *  desc ChangeFromCombfilter
+ *  license MmFromMit
+ * @version 0.0.8
  */
 
 export default CombFilter6;

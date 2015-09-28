@@ -9,7 +9,7 @@
  * https://github.com/jd-code/groovit/
  * 
  * @name basicSample
- * @version 0.0.766
+ * @version 0.0.8
  * test 
  */
   
@@ -199,11 +199,11 @@ export function dsp(t) {
     for(i=0;i<20;i++)arr[i+20]*=0.5;
     return Math.sin(t*tau*340);}
   else{
-  freqs[0]=latch(t,70,makeVol(t*5,125)*440+840,0);
-  //freqs[0]=lat1.run(t,makeVol(t*5,125)*440+840);
+  //freqs[0]=latch(t,70,makeVol(t*5,125)*440+840,0);
+  freqs[0]=lat1.run(t,makeVol(t*5,125)*440+840);
   freqs[1]=makeVol(t/2,66)*2400+140;
-  freqs[2]=latch(t,36,makeVol(t*5,22)*220+420,1);
-  //freqs[2]=lat2.run(t,makeVol(t*5,22)*220+420,1);
+  //freqs[2]=latch(t,36,makeVol(t*5,22)*220+420,1);
+  freqs[2]=lat2.run(t,makeVol(t*5,22)*220+420,1);
   kick=kick;
   snd=makeSnd(t)*0.3+kick*0.02;
   snd+=makeSampler(t*2)*0.1;
