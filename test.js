@@ -9,7 +9,7 @@
  * https://github.com/jd-code/groovit/
  * 
  * @name basicSample
- * @version 0.0.746
+ * @version 0.0.766
  * test 
  */
   
@@ -94,9 +94,9 @@ function arp(t,measure, x, y, z){
   return Math.sin(x * (Math.exp(-ts * y))) * Math.exp(-ts * z);
 }
 ///////////////////////////////////////combtest
-var comb4 = Comb(3315); 
+var comb4 = Comb(34315); 
 comb4.feedback = 1.10505115;
-comb4.damp = 0.99; 
+comb4.damp = 0.9599; 
 comb4.setInputMul(0.150); 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
