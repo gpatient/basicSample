@@ -6,7 +6,7 @@
  * @org MYORGFromOpendsp
  * @desc ChangeFromCombfilter
  * @license MmFromMit
- * @version 0.0.736
+ * @version 0.0.746
  */
 
 export default CombFilter6;
@@ -43,7 +43,8 @@ CombFilter6.prototype.run = function(input){
   var output = this.buffer[this.index];
   //if(this.index>0)output = this.buffer[this.index-1];
   this.filter = output * (1 - this.damp) + this.filter * this.damp;
-  this.buffer[this.index] = input * this.inputMul + this.filter * this.feedback;
+  this.buffer[this.index] = 
+    input * this.inputMul + this.filter * this.feedback;
   this.buffer[this.index] -=this.average;
   this.buffer[this.index] /=this.divNum;
   output=this.buffer[this.index];
@@ -55,22 +56,27 @@ CombFilter6.prototype.run = function(input){
     this.index = 0;
     this.k*=-1;
     this.average=this.sum/this.size;this.sum=0;
-    if(this.max>1.0){
-      this.divNum=this.max;
+    if(this.max>0.5){
+      this.divNum=this.max*2;
     }
-    else{ 
+    //else
+        { 
         this.divNum=1.0;///((this.feedback+1.0)/2.0);
         if(Math.random()<0.9){
           //this.size*=0.9;
-          this.size=Math.floor(this.size*0.98);
+          this.size=Math.floor(this.size*0.99)-1;
           //this.size=Math.floor(Math.random()*(this.len-100))+100;
           if(this.size<100){
             this.size=Math.floor(Math.random()*(this.len-100))+99;
             this.inputMul=this.initInputMul;
           }
-          //this.inputMul*=1.01;
-          if(this.inputMul>2.0) 
+          this.inputMul*=1.02;
+          if(this.inputMul>0.5) {
             this.inputMul=this.initInputMul;
+            this.divNum+=99980000;
+            //if(Math.random()<0.5)
+            
+          }
         }
         
       }

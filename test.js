@@ -9,7 +9,7 @@
  * https://github.com/jd-code/groovit/
  * 
  * @name basicSample
- * @version 0.0.736
+ * @version 0.0.746
  * test 
  */
   
@@ -77,7 +77,7 @@ var bufDataTestArray=wavToFloat32Array(snare);
 function bufDataTest(t)
 {
   var out=0;
-  if(Math.round(t*1000)%3000===0)
+  if(Math.round(t*100)%700===0)
     bufDataTestChk=1;
   if(bufDataTestChk==1){
     out=bufDataTestArray[bufDataTestNum];
@@ -94,9 +94,9 @@ function arp(t,measure, x, y, z){
   return Math.sin(x * (Math.exp(-ts * y))) * Math.exp(-ts * z);
 }
 ///////////////////////////////////////combtest
-var comb4 = Comb(35315);
-comb4.feedback = 1.03115;
-comb4.damp = 0.7; 
+var comb4 = Comb(3315); 
+comb4.feedback = 1.10505115;
+comb4.damp = 0.99; 
 comb4.setInputMul(0.150); 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -181,7 +181,14 @@ var lat2=latch2(36);
 
 ///////////////////////////////////////////////////////////////////////
 
- 
+
+function limit(val,cut)
+{
+  if(val>cut)return cut;
+  if(val<-cut)return -cut;
+
+  return val;
+}
 export function dsp(t) {
    var kick =arp(t,1/4, 48, 50, 8)+arp(t,1/6, 48, 350, 458);
   var snd,out=0;
@@ -202,8 +209,8 @@ export function dsp(t) {
   snd+=makeSampler(t*2)*0.1;
   snd+=bufDataTest(t)*0.07;
   //out=comb4.run(Math.random()*0.1+kick);
-  out=comb4.run(snd*1.4); 
-  
+  out=comb4.run(snd); 
+  out=limit(out,0.5);
   return out;  
   
     
