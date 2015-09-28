@@ -9,8 +9,8 @@
  * https://github.com/jd-code/groovit/
  * 
  * @name basicSample
- * @version 0.0.725
- * test
+ * @version 0.0.736
+ * test 
  */
   
 //var dd=new Date();
@@ -82,7 +82,8 @@ function bufDataTest(t)
   if(bufDataTestChk==1){
     out=bufDataTestArray[bufDataTestNum];
     bufDataTestNum++;
-    if(bufDataTestNum>bufDataTestArray.length){bufDataTestNum=0;bufDataTestChk=0;}
+    if(bufDataTestNum>=bufDataTestArray.length)
+    {bufDataTestNum=0;bufDataTestChk=0;}
   }
   return out;
 }
@@ -93,9 +94,9 @@ function arp(t,measure, x, y, z){
   return Math.sin(x * (Math.exp(-ts * y))) * Math.exp(-ts * z);
 }
 ///////////////////////////////////////combtest
-var comb4 = Comb(115315);
-comb4.feedback = 1.00115;
-comb4.damp = 0.99; 
+var comb4 = Comb(35315);
+comb4.feedback = 1.03115;
+comb4.damp = 0.7; 
 comb4.setInputMul(0.150); 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,7 +105,7 @@ comb4.setInputMul(0.150);
   var freqs=[1100,200,300,400,500,600];
   
 var r1,r2,r3;
-var arr=[1,2,3];
+var arr=new Float32Array(400);//[1,2,3];
 
   var tau=Math.PI*2;
   
@@ -152,7 +153,8 @@ function latch(t,measher,val,nn)
 {
   
   var ret=0;
-  if((Math.round(t*1000)%(measher*10))<100){if(latchChk[nn]===0)latchVal[nn]=val;latchChk[nn]=1;}
+  if((Math.round(t*1000)%(measher*10))<100)
+  {if(latchChk[nn]===0)latchVal[nn]=val;latchChk[nn]=1;}
   else{latchChk[nn]=0;}
   ret=latchVal[nn];
   return ret;
@@ -179,11 +181,11 @@ var lat2=latch2(36);
 
 ///////////////////////////////////////////////////////////////////////
 
-
+ 
 export function dsp(t) {
    var kick =arp(t,1/4, 48, 50, 8)+arp(t,1/6, 48, 350, 458);
   var snd,out=0;
-  var i;
+  var i; 
 
   if(t<2.0 && check===0){
     initcode(t);check=1;
@@ -197,12 +199,14 @@ export function dsp(t) {
   //freqs[2]=lat2.run(t,makeVol(t*5,22)*220+420,1);
   kick=kick;
   snd=makeSnd(t)*0.3+kick*0.02;
-  //snd+=makeSampler(t*2)*0.1;
-  //snd+=bufDataTest(t)*0.2;
+  snd+=makeSampler(t*2)*0.1;
+  snd+=bufDataTest(t)*0.07;
   //out=comb4.run(Math.random()*0.1+kick);
   out=comb4.run(snd*1.4); 
   
   return out;  
+  
+    
   } 
   //var num=dd.getSeconds();
   //return Math.sin(t*Math.PI*2*arr[Math.round(num)%300]);

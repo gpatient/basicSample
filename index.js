@@ -6,7 +6,7 @@
  * @org MYORGFromOpendsp
  * @desc ChangeFromCombfilter
  * @license MmFromMit
- * @version 0.0.725
+ * @version 0.0.736
  */
 
 export default CombFilter6;
@@ -15,7 +15,7 @@ function CombFilter6(size){
   if (!(this instanceof CombFilter6)) return new CombFilter6(size);
   this.size = size;
   this.index = 0;
-  this.buffer = new Float32Array(size);
+  this.buffer = new Float32Array(size*2);
   this.feedback = 0;
   this.filter = 0;
   this.damp = 0;
@@ -48,7 +48,7 @@ CombFilter6.prototype.run = function(input){
   this.buffer[this.index] /=this.divNum;
   output=this.buffer[this.index];
   this.sum+=output;
-  var qqw=Math.abs(ouput);
+  var qqw=Math.abs(output);
   if(this.max<qqw)this.max=qqw;
   if (++this.index === this.size) 
   {
@@ -62,7 +62,7 @@ CombFilter6.prototype.run = function(input){
         this.divNum=1.0;///((this.feedback+1.0)/2.0);
         if(Math.random()<0.9){
           //this.size*=0.9;
-          //this.size=Math.floor(this.size*0.99);
+          this.size=Math.floor(this.size*0.98);
           //this.size=Math.floor(Math.random()*(this.len-100))+100;
           if(this.size<100){
             this.size=Math.floor(Math.random()*(this.len-100))+99;
