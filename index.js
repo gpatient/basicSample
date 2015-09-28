@@ -6,7 +6,7 @@
  * @org MYORGFromOpendsp
  * @desc ChangeFromCombfilter
  * @license MmFromMit
- * @version 0.0.724
+ * @version 0.0.725
  */
 
 export default CombFilter6;
