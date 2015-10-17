@@ -22,9 +22,9 @@ import snare from 'jd-code/groovit/master/SAMPLES/SNAR_13D.WAV';
 import hihat from 'pdv/webmpc/master/sounds/r909/909hat.wav';
 import guitar from 'zillionk/AirInstruments/master/data/guitarAm.wav';
 
-import ttw1 from 'gpatient/imitationSpeech1/master/ttw1.wav';
+import ttw1 from 'gpatient/imitationSpeech1zillionk/AirInstruments/master/data/guitarAm.wav';
 
- 
+
 import Sampler from 'stagas/sampler';
 //import comb from 'gpatient/Changecombfilter6';
 import Comb from './index.js';
@@ -60,22 +60,6 @@ function makeSampler(t)
 
 ////////////////////////////////wave file buffer reading test from stagas/sampler
 
-function wav8ToFloat32Array(buffer){
-  var view = new DataView(buffer, 44);
-  var len = view.byteLength ;
-  var floats = new Float32Array(len);
-  for (var i = 0; i < view.byteLength; i += 1) {
-    var s = view.getUint8(i);//, true);
-    if (s > 127) {
-      s -= 256;
-    }
-    s /= 256;
-    floats[i] = s*0.5;
-  }
-  return floats;
-}
-var bufDataTestTtw1=wav8ToFloat32Array(ttw1);
- 
 function wavToFloat32Array(buffer){
   var view = new DataView(buffer, 44);
   var len = view.byteLength / 2;
@@ -208,14 +192,7 @@ function limit(val,cut)
 
   return val;
 }
-var ii=0;
-export function  dsp(t){
-  ii++;
- return bufDataTestTtw1[Math.floor(ii/4)%bufDataTestTtw1.length];
- //return Math.sin(t*tau*340);
-}
-//export 
-function dsp2(t) {
+export function dsp(t) {
    var kick =arp(t,1/4, 48, 50, 8)+arp(t,1/6, 48, 350, 458);
   var snd,out=0;
   var i; 
