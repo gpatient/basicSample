@@ -215,8 +215,7 @@ function  dsp2(t){
  return bufDataTestTtw1[Math.floor(ii/4)%bufDataTestTtw1.length];
  //return Math.sin(t*tau*340);
 }
-//export 
-function dsp(t) {
+export function dsp(t) {
    var kick =arp(t,1/4, 48, 50, 8)+arp(t,1/6, 48, 350, 458);
   var snd,out=0;
   var i; 
